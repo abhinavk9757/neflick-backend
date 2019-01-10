@@ -4,7 +4,7 @@ const _ = require('lodash');
 const userModel = require('../models/UserModel');
 const bodyParser = require('body-parser');
 const jwt = require('jsonwebtoken');
-const mongoose = require('../db/Mongoose');
+const mongoose = require('./db/Mongoose');
 
 const authToken = require('./middlewares/authToken');
 
@@ -16,7 +16,6 @@ app.use(bodyParser.json());
 
 app.post('/users', (req, res) => {
   const body = _.pick(req.body, ['email', 'password']);
-  body.password = jwt.sign(body.password, process.env.SECRET_KEY);
 
   const userInfo = new userModel(body);
 
