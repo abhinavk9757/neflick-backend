@@ -6,6 +6,8 @@ const bodyParser = require('body-parser');
 const jwt = require('jsonwebtoken');
 const mongoose = require('../db/Mongoose');
 
+const authToken = require('./middlewares/authToken');
+
 const app = express();
 
 const PORT = process.env.PORT || 3000;
@@ -21,15 +23,18 @@ app.post('/users', (req, res) => {
   userInfo
     .save()
     .then(() => {
-      return userInfo.generateAuthToken(userInfo);
+      return userInfo.generateAuthToken();
     })
     .then(token => {
-      console;
       res.header('x-auth', token).send(userInfo.toJSON());
     })
     .catch(err => {
       res.status(400).send(err);
     });
+});
+
+app.get('/users/me', authToken, (req, res) => {
+  res.send(req.user);
 });
 
 app.listen(PORT, err => {

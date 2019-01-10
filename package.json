@@ -1,5 +1,5 @@
 {
-  "name": "neflick-login",
+  "name": "neflick-backend",
   "version": "1.0.0",
   "description": "Back-End for neflick (Netflix Clone)",
   "main": "server.js",

@@ -36,11 +36,12 @@ const userSchema = new mongoose.Schema({
 
 userSchema.methods.toJSON = function() {
   const user = this;
-  const userObject = user.toObject();
+  // const userObject = user.toObject();
   return _.pick(user, ['_id', 'email']);
 };
 
-userSchema.methods.generateAuthToken = function(user) {
+userSchema.methods.generateAuthToken = function() {
+  const user = this;
   const access = 'auth';
   const token = jwt.sign(
     { _id: user._id.toHexString(), access },
@@ -50,6 +51,22 @@ userSchema.methods.generateAuthToken = function(user) {
 
   return user.save().then(() => {
     return token;
+  });
+};
+
+userSchema.statics.findByToken = function(token) {
+  const user = this;
+  let decoded;
+  try {
+    decoded = jwt.verify(token, process.env.SECRET_KEY);
+  } catch (e) {
+    return Promise.reject();
+  }
+
+  return user.findOne({
+    _id: decoded._id,
+    'tokens.token': token,
+    'tokens.access': decoded.access,
   });
 };
 
