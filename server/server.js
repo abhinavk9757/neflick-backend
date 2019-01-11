@@ -36,6 +36,21 @@ app.get('/users/me', authToken, (req, res) => {
   res.send(req.user);
 });
 
+app.post('/users/login', (req, res) => {
+  const body = _.pick(req.body, ['email', 'password']);
+
+  userModel
+    .findByCredentials(body.email, body.password)
+    .then(user => {
+      return user.generateAuthToken().then(token => {
+        res.header('x-auth', token).send(user);
+      });
+    })
+    .catch(() => {
+      res.status(401).send();
+    });
+});
+
 app.listen(PORT, err => {
   if (err) {
     return console.log('Could not spin up the server ', err);
