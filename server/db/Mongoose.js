@@ -3,6 +3,7 @@ const mongoose = require('mongoose');
 const mongoDbConnectionOptions = {
   useNewUrlParser: true,
   useCreateIndex: true,
+  useFindAndModify: false,
 };
 
 mongoose

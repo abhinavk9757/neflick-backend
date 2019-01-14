@@ -51,6 +51,17 @@ app.post('/users/login', (req, res) => {
     });
 });
 
+app.delete('/users/logout', authToken, (req, res) => {
+  userModel
+    .removeToken(req.token)
+    .then(() => {
+      res.status(200).send();
+    })
+    .catch(() => {
+      res.status(400).send();
+    });
+});
+
 app.listen(PORT, err => {
   if (err) {
     return console.log('Could not spin up the server ', err);
