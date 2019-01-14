@@ -22,6 +22,6 @@ Returns **email** and **_id** of the existing user and generated authentication 
 3. **GET /users/me** => View details of currently logged-in user.
 Requires authentication token in header with the key as **x-auth** and value as the token value.
 Returns **email** and **_id** of user.
-4. **POST /users/logout** => Log out the currently logged user
+4. **DELETE /users/logout** => Log out the currently logged user
 Requires authentication token in header with the key as **x-auth** and value as the token value.
 Returns a response with status code of **200** on success and **400** on token validation failure.
