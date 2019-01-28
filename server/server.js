@@ -5,14 +5,15 @@ const userModel = require('../models/UserModel');
 const bodyParser = require('body-parser');
 const jwt = require('jsonwebtoken');
 const mongoose = require('./db/Mongoose');
+const cors = require('cors');
 
 const authToken = require('./middlewares/authToken');
 
 const app = express();
 
-const PORT = process.env.PORT || 3000;
+const PORT = 3001;
 
-app.use(bodyParser.json());
+app.use(cors(), bodyParser.json());
 
 app.post('/users', (req, res) => {
   const body = _.pick(req.body, ['email', 'password']);
