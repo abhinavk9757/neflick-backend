@@ -56,8 +56,7 @@ userSchema.methods.generateAuthToken = function() {
 
 userSchema.statics.removeToken = function(token) {
   const User = this;
-  return User.findOneAndUp
-  date({}, { $pull: { tokens: { token: token } } });
+  return User.findOneAndUpdate({}, { $pull: { tokens: { token: token } } });
 };
 
 userSchema.statics.findByToken = function(token) {
