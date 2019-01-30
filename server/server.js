@@ -13,7 +13,12 @@ const app = express();
 
 const PORT = process.env.PORT || 3000;
 
-app.use(cors(), bodyParser.json());
+app.use(
+  cors({
+    exposedHeaders: ['x-auth'],
+  }),
+  bodyParser.json(),
+);
 
 app.post('/users', (req, res) => {
   const body = _.pick(req.body, ['email', 'password']);
